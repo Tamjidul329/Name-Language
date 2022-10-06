@@ -1,0 +1,30 @@
+title CS355 Final Project
+
+participant User
+participant Server
+participant Agify.io
+
+participant Detect_Language
+
+User->Server:Browser requests "/" root of our site
+Server->User: Sends 200 OK, Returns website.html (form)
+
+User->Server: Fills out form (data: name)Browser requests "/search" 
+
+Server->Agify.io: https request to use the **input** to look up information about the name
+
+note over Agify.io:takes the **input** \nas a stream and responds \nwith an object containing \nname, age, and count. \nWe only want the **name** returned
+
+Agify.io->Server:returns 200 OK + **name**
+
+Server->Detect_Language:https request to access Detect Language by passing the **name**
+
+Detect_Language->User: requests an Authorization-Key
+
+User->Detect_Language: Provides Authorization-Key through credentials.json
+
+Detect_Language->Server: responds with 200 ok + language (stores in **results**
+
+note over Server: res.end(results) displays the \nlanguage on the webpage
+
+Server->User: 200 OK Displays Task
